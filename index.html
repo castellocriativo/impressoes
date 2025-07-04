@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Impressões & Cópias</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
@@ -34,7 +34,7 @@
 
         .logo {
             max-width: 400px;
-            width: 100%;
+            width: 90%;
             height: auto;
             display: block;
             margin: 0 auto;
@@ -42,6 +42,7 @@
 
         .container {
             display: flex;
+            flex-direction: row;
             gap: 20px;
             justify-content: center;
             align-items: flex-start;
@@ -51,7 +52,7 @@
 
         .form-section, .result-section {
             background: white;
-            padding: 30px;
+            padding: 20px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             width: 100%;
@@ -61,33 +62,34 @@
         h1 {
             text-align: center;
             color: #2575fc;
-            font-size: 28px;
-            margin-bottom: 20px;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
             font-weight: 600;
         }
 
         h2 {
             text-align: center;
             color: #555;
-            font-size: 20px;
-            margin: 15px 0;
+            font-size: 1.2rem;
+            margin: 10px 0;
             font-weight: 500;
         }
 
         label {
             display: block;
-            margin-top: 15px;
+            margin-top: 10px;
             font-weight: 500;
             color: #555;
+            font-size: 0.9rem;
         }
 
         input[type="number"] {
             width: 100%;
-            padding: 12px;
-            margin: 8px 0 20px 0;
+            padding: 10px;
+            margin: 8px 0 15px 0;
             border: 2px solid #ddd;
             border-radius: 10px;
-            font-size: 16px;
+            font-size: 0.9rem;
             transition: border-color 0.3s ease;
         }
 
@@ -99,33 +101,34 @@
         .button-group-material, .button-group {
             display: flex;
             gap: 10px;
-            margin: 20px 0;
+            margin: 15px 0;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .button-group-material button, .button-group button {
             flex: 1;
-            padding: 14px;
+            padding: 12px;
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 0.9rem;
             font-weight: 500;
             transition: all 0.3s ease;
-            min-width: 180px;
+            min-width: 150px;
             background: linear-gradient(135deg, #2575fc, #6a11cb);
             color: #ddd;
             position: relative;
             overflow: hidden;
+            touch-action: manipulation;
         }
 
         .button-group-material button {
-            height: 60px;
+            height: 50px;
         }
 
         .button-group button {
-            height: 50px;
+            height: 45px;
         }
 
         .button-group-material button.active {
@@ -169,12 +172,12 @@
         button.calculate-btn {
             background: linear-gradient(135deg, #2575fc, #6a11cb);
             color: white;
-            padding: 14px;
+            padding: 12px;
             border: none;
             border-radius: 10px;
             width: 100%;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 0.9rem;
             font-weight: 500;
             transition: background 0.3s ease;
         }
@@ -184,29 +187,29 @@
         }
 
         .result {
-            margin-top: 25px;
-            padding: 20px;
+            margin-top: 15px;
+            padding: 15px;
             background: #f9f9f9;
             border-radius: 10px;
             text-align: center;
-            font-size: 18px;
+            font-size: 0.9rem;
             font-weight: 500;
             color: #2575fc;
             border: 2px dashed #ddd;
         }
 
         .destaque-total {
-            font-size: 28px;
+            font-size: 1.5rem;
             font-weight: bold;
             color: #00FF00;
-            padding: 10px;
+            padding: 8px;
             border-radius: 10px;
-            margin-top: 10px;
+            margin-top: 8px;
             display: inline-block;
         }
 
         .emoji {
-            font-size: 24px;
+            font-size: 1.2rem;
         }
 
         #adminPanel {
@@ -216,57 +219,62 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background: white;
-            padding: 30px;
+            padding: 20px;
             border-radius: 15px;
             box-shadow: 0 5px 25px rgba(0,0,0,0.3);
             z-index: 1000;
             max-width: 90%;
-            max-height: 90vh;
+            max-height: 85vh;
             overflow-y: auto;
-            width: 800px;
+            width: 100%;
         }
 
         #adminPanel h2 {
             color: #2575fc;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-align: center;
+            font-size: 1.4rem;
         }
 
         .price-category {
-            margin-bottom: 20px;
-            padding: 15px;
+            margin-bottom: 15px;
+            padding: 10px;
             background: #f5f5f5;
             border-radius: 10px;
         }
 
         .price-category h3 {
             color: #6a11cb;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
         }
 
         .price-range {
             display: flex;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
+            flex-wrap: wrap;
         }
 
         .price-range label {
             margin: 0;
-            width: 150px;
+            width: 120px;
+            font-size: 0.85rem;
         }
 
         .price-range input {
-            width: 100px;
-            padding: 8px;
-            margin: 0 10px;
+            width: 80px;
+            padding: 6px;
+            margin: 0 8px;
+            font-size: 0.85rem;
         }
 
         #adminBtn {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
             background: linear-gradient(135deg, #2575fc, #6a11cb);
             color: white;
             border: none;
@@ -286,7 +294,7 @@
         }
 
         #adminBtn i {
-            font-size: 24px;
+            font-size: 1.2rem;
         }
 
         #adminOverlay {
@@ -303,16 +311,17 @@
         .admin-actions {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
+            gap: 10px;
+            margin-top: 15px;
         }
 
         .admin-actions button {
-            padding: 10px 20px;
+            padding: 8px 15px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 500;
+            font-size: 0.9rem;
         }
 
         #savePricesBtn {
@@ -326,68 +335,76 @@
         }
 
         .admin-settings {
-            margin-top: 20px;
-            padding: 15px;
+            margin-top: 15px;
+            padding: 10px;
             background: #f0f0f0;
             border-radius: 10px;
         }
 
         .admin-settings h3 {
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             color: #2575fc;
+            font-size: 1.1rem;
         }
 
         .setting-item {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
         }
 
         .setting-item label {
-            width: 200px;
+            width: 180px;
             margin: 0;
+            font-size: 0.85rem;
         }
 
         .setting-item input {
-            width: 100px;
-            padding: 8px;
+            width: 80px;
+            padding: 6px;
+            font-size: 0.85rem;
         }
 
         .button-management {
-            margin-bottom: 20px;
-            padding: 15px;
+            margin-bottom: 15px;
+            padding: 10px;
             background: #f5f5f5;
             border-radius: 10px;
         }
 
         .button-management h3 {
             color: #6a11cb;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
         }
 
         .add-button-form {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 15px;
+            gap: 8px;
+            margin-bottom: 10px;
         }
 
         .add-button-form input[type="text"] {
             flex: 1;
-            min-width: 200px;
+            min-width: 150px;
+            padding: 8px;
+            font-size: 0.85rem;
         }
 
         .add-button-form button {
-            padding: 10px 20px;
+            padding: 8px 15px;
             background: linear-gradient(135deg, #4CAF50, #2E7D32);
             color: white;
             border: none;
             border-radius: 8px;
             cursor: pointer;
+            font-size: 0.9rem;
         }
 
         .button-list {
-            max-height: 200px;
+            max-height: 150px;
             overflow-y: auto;
         }
 
@@ -395,7 +412,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px;
+            padding: 8px;
             border-bottom: 1px solid #ddd;
             cursor: move;
         }
@@ -412,6 +429,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 0.85rem;
         }
 
         @keyframes fadeIn {
@@ -431,6 +449,158 @@
             }
             100% {
                 left: 100%;
+            }
+        }
+
+        /* Mobile-specific styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .form-section, .result-section {
+                padding: 15px;
+                border-radius: 15px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+            }
+
+            h2 {
+                font-size: 1rem;
+                margin: 8px 0;
+            }
+
+            label {
+                font-size: 0.8rem;
+            }
+
+            input[type="number"], input[type="text"] {
+                padding: 8px;
+                font-size: 0.8rem;
+            }
+
+            .button-group-material button, .button-group button {
+                min-width: 120px;
+                padding: 10px;
+                font-size: 0.8rem;
+                height: 40px;
+            }
+
+            button.calculate-btn {
+                padding: 10px;
+                font-size: 0.8rem;
+            }
+
+            .result {
+                font-size: 0.8rem;
+                padding: 10px;
+            }
+
+            .destaque-total {
+                font-size: 1.2rem;
+            }
+
+            .emoji {
+                font-size: 1rem;
+            }
+
+            #adminPanel {
+                width: 95%;
+                padding: 15px;
+                max-height: 90vh;
+                top: 0;
+                left: 0;
+                transform: none;
+                border-radius: 0;
+            }
+
+            #adminPanel h2 {
+                font-size: 1.2rem;
+            }
+
+            .price-category h3, .admin-settings h3, .button-management h3 {
+                font-size: 1rem;
+            }
+
+            .price-range label, .setting-item label {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+
+            .price-range input, .setting-item input {
+                width: 100%;
+                margin: 5px 0;
+            }
+
+            .admin-actions button {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+
+            .add-button-form input[type="text"] {
+                min-width: 100%;
+            }
+
+            .add-button-form button {
+                width: 100%;
+                padding: 8px;
+            }
+
+            #adminBtn {
+                width: 45px;
+                height: 45px;
+                bottom: 15px;
+                right: 15px;
+            }
+
+            #adminBtn i {
+                font-size: 1rem;
+            }
+
+            .logo {
+                max-width: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                max-width: 200px;
+            }
+
+            h1 {
+                font-size: 1.3rem;
+            }
+
+            h2 {
+                font-size: 0.9rem;
+            }
+
+            .button-group-material button, .button-group button {
+                min-width: 100%;
+                font-size: 0.75rem;
+                padding: 8px;
+                height: 35px;
+            }
+
+            button.calculate-btn {
+                font-size: 0.75rem;
+                padding: 8px;
+            }
+
+            .result {
+                font-size: 0.75rem;
+            }
+
+            .destaque-total {
+                font-size: 1rem;
             }
         }
     </style>
@@ -777,6 +947,45 @@
                         localStorage.setItem('printPrices', JSON.stringify(currentPrices));
                         loadButtonList();
                         renderButtonGroup();
+                    }
+                });
+
+                // Add touch support for drag-and-drop
+                item.addEventListener('touchstart', (e) => {
+                    item.classList.add('dragging');
+                    e.target.setAttribute('data-dragging', 'true');
+                });
+
+                item.addEventListener('touchmove', (e) => {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    const target = document.elementFromPoint(touch.clientX, touch.clientY);
+                    if (target && target.classList.contains('button-item')) {
+                        target.style.background = '#e0e0e0';
+                    }
+                });
+
+                item.addEventListener('touchend', (e) => {
+                    item.classList.remove('dragging');
+                    const target = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+                    item.removeAttribute('data-dragging');
+                    if (target && target.classList.contains('button-item')) {
+                        target.style.background = '';
+                        const draggedType = item.getAttribute('data-type');
+                        const targetType = target.getAttribute('data-type');
+                        if (draggedType !== targetType) {
+                            const newOrder = Object.keys(currentPrices).filter(type => type !== draggedType);
+                            const targetIndex = newOrder.indexOf(targetType);
+                            newOrder.splice(targetIndex, 0, draggedType);
+                            const newPrices = {};
+                            newOrder.forEach(type => {
+                                newPrices[type] = currentPrices[type];
+                            });
+                            currentPrices = newPrices;
+                            localStorage.setItem('printPrices', JSON.stringify(currentPrices));
+                            loadButtonList();
+                            renderButtonGroup();
+                        }
                     }
                 });
             });
