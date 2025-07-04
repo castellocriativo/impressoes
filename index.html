@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impressões & Cópias</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #2575fc, #6a11cb);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+            width: 100%;
+        }
+
+        .logo {
+            max-width: 400px;
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: flex-start;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .form-section, .result-section {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2575fc;
+            font-size: 28px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        h2 {
+            text-align: center;
+            color: #555;
+            font-size: 20px;
+            margin: 15px 0;
+            font-weight: 500;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 20px 0;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="number"]:focus {
+            border-color: #2575fc;
+            outline: none;
+        }
+
+        .button-group-material, .button-group {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .button-group-material button, .button-group button {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            min-width: 180px;
+            background: linear-gradient(135deg, #2575fc, #6a11cb);
+            color: #ddd;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button-group-material button {
+            height: 60px;
+        }
+
+        .button-group button {
+            height: 50px;
+        }
+
+        .button-group-material button.active {
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+        }
+
+        .button-group-material button.active::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            animation: shine 1.5s infinite;
+        }
+
+        .button-group-material button:hover:not(.active) {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            transform: scale(1.05);
+        }
+
+        .button-group button.active {
+            background: linear-gradient(135deg, #2575fc, #6a11cb);
+            color: white;
+        }
+
+        .button-group button:not(.active) {
+            background: #ddd;
+            color: #333;
+        }
+
+        button.calculate-btn {
+            background: linear-gradient(135deg, #2575fc, #6a11cb);
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            width: 100%;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        button.calculate-btn:hover {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 500;
+            color: #2575fc;
+            border: 2px dashed #ddd;
+        }
+
+        .destaque-total {
+            font-size: 28px;
+            font-weight: bold;
+            color: #00FF00;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .emoji {
+            font-size: 24px;
+        }
+
+        #adminPanel {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+            z-index: 1000;
+            max-width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            width: 800px;
+        }
+
+        #adminPanel h2 {
+            color: #2575fc;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .price-category {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+
+        .price-category h3 {
+            color: #6a11cb;
+            margin-bottom: 10px;
+        }
+
+        .price-range {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .price-range label {
+            margin: 0;
+            width: 150px;
+        }
+
+        .price-range input {
+            width: 100px;
+            padding: 8px;
+            margin: 0 10px;
+        }
+
+        #adminBtn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #2575fc, #6a11cb);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 999;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        #adminBtn:hover {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+        }
+
+        #adminBtn i {
+            font-size: 24px;
+        }
+
+        #adminOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 998;
+        }
+
+        .admin-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .admin-actions button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        #savePricesBtn {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            color: white;
+        }
+
+        #closeAdminBtn {
+            background: linear-gradient(135deg, #f44336, #c62828);
+            color: white;
+        }
+
+        .admin-settings {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 10px;
+        }
+
+        .admin-settings h3 {
+            margin-bottom: 15px;
+            color: #2575fc;
+        }
+
+        .setting-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .setting-item label {
+            width: 200px;
+            margin: 0;
+        }
+
+        .setting-item input {
+            width: 100px;
+            padding: 8px;
+        }
+
+        .button-management {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+
+        .button-management h3 {
+            color: #6a11cb;
+            margin-bottom: 15px;
+        }
+
+        .add-button-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .add-button-form input[type="text"] {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .add-button-form button {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .button-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .button-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            cursor: move;
+        }
+
+        .button-item.dragging {
+            opacity: 0.5;
+            background: #e0e0e0;
+        }
+
+        .button-item button {
+            padding: 5px 10px;
+            background: linear-gradient(135deg, #f44336, #c62828);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shine {
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="adminOverlay"></div>
+    <div id="adminPanel">
+        <h2>Painel de Administração - Configurações</h2>
+        
+        <div class="button-management">
+            <h3>Gerenciar Tipos de Impressão</h3>
+            <div class="add-button-form">
+                <input type="text" id="newButtonName" placeholder="Nome do novo tipo (ex: Impressão Especial)">
+                <button onclick="addNewButtonType()">Adicionar Tipo</button>
+            </div>
+            <div class="button-list" id="buttonList"></div>
+        </div>
+        
+        <div id="priceEditor"></div>
+        
+        <div class="admin-settings">
+            <h3>Configurações Gerais</h3>
+            <div class="setting-item">
+                <label>Desconto Frente e Verso (%):</label>
+                <input type="number" id="frenteVersoDiscount" min="0" max="100" step="1">
+            </div>
+            <h3>Preços de Encadernação</h3>
+            <div class="setting-item">
+                <label>Até 20 folhas:</label>
+                <input type="number" id="encad20" min="0" step="0.01">
+            </div>
+            <div class="setting-item">
+                <label>21-50 folhas:</label>
+                <input type="number" id="encad50" min="0" step="0.01">
+            </div>
+            <div class="setting-item">
+                <label>51-100 folhas:</label>
+                <input type="number" id="encad100" min="0" step="0.01">
+            </div>
+            <div class="setting-item">
+                <label>101-200 folhas:</label>
+                <input type="number" id="encad200" min="0" step="0.01">
+            </div>
+            <div class="setting-item">
+                <label>201-300 folhas:</label>
+                <input type="number" id="encad300" min="0" step="0.01">
+            </div>
+            <div class="setting-item">
+                <label>301-400 folhas:</label>
+                <input type="number" id="encad400" min="0" step="0.01">
+            </div>
+        </div>
+        
+        <div class="admin-actions">
+            <button id="savePricesBtn" onclick="savePrices()">Salvar Alterações</button>
+            <button id="closeAdminBtn" onclick="hideAdminPanel()">Fechar</button>
+        </div>
+    </div>
+
+    <button id="adminBtn" onclick="showAdminPanel()" title="Painel de Administração">
+        <i class="fas fa-cog"></i>
+    </button>
+
+    <header>
+        <img src="logohorizontal.png" alt="Logo da Empresa" class="logo">
+    </header>
+    <div class="container">
+        <div class="form-section">
+            <h1>Impressões / Cópias</h1>
+            <label for="quantidade">Quantidade:</label>
+            <input type="number" id="quantidade" min="1" placeholder="Digite a quantidade">
+
+            <label>Tipo de impressão:</label>
+            <div class="button-group-material" id="buttonGroupMaterial"></div>
+
+            <h2>Outras informações:</h2>
+            <div class="button-group">
+                <button id="frenteVersoBtn" onclick="toggleFrenteVerso()">Frente e Verso</button>
+                <button id="encadernacaoBtn" onclick="toggleEncadernacao()">Encadernação</button>
+            </div>
+
+            <button class="calculate-btn" onclick="atualizarTotal()">Calcular</button>
+        </div>
+
+        <div class="result-section">
+            <h1>Resultado</h1>
+            <div class="result" id="resultado" style="display: none;">
+                <p><strong>Quantidade:</strong> <span id="resultadoQuantidade"></span></p>
+                <p><strong>Tipo:</strong> <span id="resultadoTipo"></span></p>
+                <p><strong>Frente e Verso:</strong> <span id="resultadoFrenteVerso"></span></p>
+                <p><strong>Encadernação:</strong> <span id="resultadoEncadernacao"></span></p>
+                <p><strong>Valor por Impressão:</strong> <span id="resultadoValorUnitario"></span></p>
+                <p><strong>Total:</strong> <span id="resultadoTotal"></span></p>
+            </div>
+
+            <div class="observacoes" id="observacoes" style="display: none;">
+                <strong>Observações:</strong>
+                <ul id="observacoesLista"></ul>
+            </div>
+
+            <button id="btnCopiar" class="calculate-btn" onclick="copiarOrcamento()" style="display: none;">Copiar Orçamento</button>
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_PASSWORD = "admin123";
+        const DEFAULT_PRICES = {
+            preto_branco: [
+                { max: 10, price: 0.50 },
+                { max: 30, price: 0.47 },
+                { max: 60, price: 0.43 },
+                { max: 100, price: 0.38 },
+                { max: 200, price: 0.34 },
+                { max: Infinity, price: 0.30 }
+            ],
+            copia_preto_branco: [
+                { max: 10, price: 0.35 },
+                { max: 30, price: 0.32 },
+                { max: 60, price: 0.28 },
+                { max: 100, price: 0.30 },
+                { max: 200, price: 0.25 },
+                { max: Infinity, price: 0.20 }
+            ],
+            colorida_pigmentada: [
+                { max: 10, price: 1.00 },
+                { max: 30, price: 0.90 },
+                { max: 60, price: 0.80 },
+                { max: 100, price: 0.70 },
+                { max: 200, price: 0.60 },
+                { max: Infinity, price: 0.40 }
+            ],
+            colorida_laser: [
+                { max: 10, price: 2.00 },
+                { max: 30, price: 1.80 },
+                { max: 60, price: 1.60 },
+                { max: 100, price: 1.40 },
+                { max: 200, price: 1.20 },
+                { max: Infinity, price: 1.00 }
+            ],
+            couche: [
+                { max: 10, price: 3.00 },
+                { max: 30, price: 2.80 },
+                { max: 60, price: 2.60 },
+                { max: 100, price: 2.40 },
+                { max: 200, price: 2.10 },
+                { max: Infinity, price: 1.90 }
+            ],
+            cartao: [
+                { max: 10, price: 2.50 },
+                { max: 30, price: 2.40 },
+                { max: 60, price: 2.30 },
+                { max: 100, price: 2.20 },
+                { max: 200, price: 2.00 },
+                { max: Infinity, price: 1.80 }
+            ]
+        };
+
+        const DEFAULT_SETTINGS = {
+            frenteVersoDiscount: 10,
+            encadernacao: {
+                encad20: 2.00,
+                encad50: 3.50,
+                encad100: 4.00,
+                encad200: 6.00,
+                encad300: 8.00,
+                encad400: 10.00
+            }
+        };
+
+        let frenteVersoAtivo = false;
+        let encadernacaoAtivo = false;
+        let tipoSelecionado = null;
+        let ultimoBotaoMaterial = null;
+        let currentPrices = {};
+        let currentSettings = {};
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPrices();
+            loadSettings();
+            renderButtonGroup();
+            setupDragAndDrop();
+        });
+
+        function loadPrices() {
+            const savedPrices = localStorage.getItem('printPrices');
+            if (savedPrices) {
+                currentPrices = JSON.parse(savedPrices);
+            } else {
+                currentPrices = JSON.parse(JSON.stringify(DEFAULT_PRICES));
+                localStorage.setItem('printPrices', JSON.stringify(currentPrices));
+            }
+        }
+
+        function loadSettings() {
+            const savedSettings = localStorage.getItem('printSettings');
+            if (savedSettings) {
+                currentSettings = JSON.parse(savedSettings);
+            } else {
+                currentSettings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
+                localStorage.setItem('printSettings', JSON.stringify(currentSettings));
+            }
+        }
+
+        function savePrices() {
+            const categories = document.querySelectorAll('.price-category');
+            categories.forEach(category => {
+                const type = category.getAttribute('data-type');
+                const inputs = category.querySelectorAll('input[type="number"]');
+                currentPrices[type] = [];
+                inputs.forEach((input, index) => {
+                    const max = index < inputs.length - 1 ? 
+                        parseInt(input.getAttribute('data-max')) : 
+                        Infinity;
+                    currentPrices[type].push({
+                        max: max,
+                        price: parseFloat(input.value)
+                    });
+                });
+            });
+
+            currentSettings.frenteVersoDiscount = parseFloat(document.getElementById('frenteVersoDiscount').value);
+            currentSettings.encadernacao = {
+                encad20: parseFloat(document.getElementById('encad20').value),
+                encad50: parseFloat(document.getElementById('encad50').value),
+                encad100: parseFloat(document.getElementById('encad100').value),
+                encad200: parseFloat(document.getElementById('encad200').value),
+                encad300: parseFloat(document.getElementById('encad300').value),
+                encad400: parseFloat(document.getElementById('encad400').value)
+            };
+
+            localStorage.setItem('printPrices', JSON.stringify(currentPrices));
+            localStorage.setItem('printSettings', JSON.stringify(currentSettings));
+            alert('Configurações salvas com sucesso!');
+            renderButtonGroup();
+            hideAdminPanel();
+        }
+
+        function renderButtonGroup() {
+            const buttonGroup = document.getElementById('buttonGroupMaterial');
+            buttonGroup.innerHTML = '';
+            for (const type of Object.keys(currentPrices)) {
+                const button = document.createElement('button');
+                const displayName = type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                button.textContent = displayName;
+                button.setAttribute('data-type', type);
+                button.onclick = () => selecionarTipo(type);
+                buttonGroup.appendChild(button);
+            }
+        }
+
+        function addNewButtonType() {
+            const nameInput = document.getElementById('newButtonName');
+            let name = nameInput.value.trim();
+            if (!name) {
+                alert('Por favor, insira um nome para o novo tipo.');
+                return;
+            }
+
+            const typeId = name.toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '');
+            if (currentPrices[typeId]) {
+                alert('Este tipo já existe. Escolha um nome diferente.');
+                return;
+            }
+
+            currentPrices[typeId] = JSON.parse(JSON.stringify(DEFAULT_PRICES.preto_branco));
+            localStorage.setItem('printPrices', JSON.stringify(currentPrices));
+            nameInput.value = '';
+            renderButtonGroup();
+            loadPriceEditor();
+            loadButtonList();
+            alert(`Tipo "${name}" adicionado com sucesso!`);
+        }
+
+        function removeButtonType(type) {
+            if (Object.keys(currentPrices).length <= 1) {
+                alert('Não é possível remover o último tipo de impressão.');
+                return;
+            }
+            if (confirm(`Deseja realmente remover o tipo "${type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}"?`)) {
+                delete currentPrices[type];
+                if (tipoSelecionado === type) {
+                    tipoSelecionado = null;
+                }
+                localStorage.setItem('printPrices', JSON.stringify(currentPrices));
+                renderButtonGroup();
+                loadPriceEditor();
+                loadButtonList();
+                atualizarTotal();
+            }
+        }
+
+        function loadButtonList() {
+            const buttonList = document.getElementById('buttonList');
+            buttonList.innerHTML = '';
+            for (const type of Object.keys(currentPrices)) {
+                const item = document.createElement('div');
+                item.className = 'button-item';
+                item.setAttribute('draggable', 'true');
+                item.setAttribute('data-type', type);
+                const displayName = type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                item.innerHTML = `
+                    <span>${displayName}</span>
+                    <button onclick="removeButtonType('${type}')">Remover</button>
+                `;
+                buttonList.appendChild(item);
+            }
+            setupDragAndDrop();
+        }
+
+        function setupDragAndDrop() {
+            const buttonList = document.getElementById('buttonList');
+            const items = buttonList.querySelectorAll('.button-item');
+
+            items.forEach(item => {
+                item.addEventListener('dragstart', (e) => {
+                    item.classList.add('dragging');
+                    e.dataTransfer.setData('text/plain', item.getAttribute('data-type'));
+                });
+
+                item.addEventListener('dragend', () => {
+                    item.classList.remove('dragging');
+                });
+
+                item.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                });
+
+                item.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    const draggedType = e.dataTransfer.getData('text/plain');
+                    const targetType = item.getAttribute('data-type');
+                    
+                    if (draggedType !== targetType) {
+                        const newOrder = Object.keys(currentPrices).filter(type => type !== draggedType);
+                        const targetIndex = newOrder.indexOf(targetType);
+                        newOrder.splice(targetIndex, 0, draggedType);
+                        
+                        const newPrices = {};
+                        newOrder.forEach(type => {
+                            newPrices[type] = currentPrices[type];
+                        });
+                        currentPrices = newPrices;
+                        
+                        localStorage.setItem('printPrices', JSON.stringify(currentPrices));
+                        loadButtonList();
+                        renderButtonGroup();
+                    }
+                });
+            });
+        }
+
+        function showAdminPanel() {
+            const password = prompt("Digite a senha de administração:");
+            if (password === ADMIN_PASSWORD) {
+                document.getElementById('adminOverlay').style.display = 'block';
+                document.getElementById('adminPanel').style.display = 'block';
+                loadPriceEditor();
+                loadSettingsEditor();
+                loadButtonList();
+            } else if (password !== null) {
+                alert('Senha incorreta!');
+            }
+        }
+
+        function hideAdminPanel() {
+            document.getElementById('adminOverlay').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'none';
+        }
+
+        function loadPriceEditor() {
+            const editor = document.getElementById('priceEditor');
+            editor.innerHTML = '';
+            for (const [type, ranges] of Object.entries(currentPrices)) {
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = 'price-category';
+                categoryDiv.setAttribute('data-type', type);
+                const typeName = type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                categoryDiv.innerHTML = `<h3>${typeName}</h3>`;
+                for (let i = 0; i < ranges.length; i++) {
+                    const range = ranges[i];
+                    const rangeDiv = document.createElement('div');
+                    rangeDiv.className = 'price-range';
+                    let labelText;
+                    if (range.max === Infinity) {
+                        labelText = `Acima de ${ranges[i-1].max}`;
+                    } else {
+                        const min = i === 0 ? 1 : ranges[i-1].max + 1;
+                        labelText = `De ${min} a ${range.max}`;
+                    }
+                    rangeDiv.innerHTML = `
+                        <label>${labelText}:</label>
+                        <span>R$</span>
+                        <input type="number" step="0.01" min="0" 
+                               value="${range.price.toFixed(2)}" 
+                               data-max="${range.max === Infinity ? '' : range.max}">
+                    `;
+                    categoryDiv.appendChild(rangeDiv);
+                }
+                editor.appendChild(categoryDiv);
+            }
+        }
+
+        function loadSettingsEditor() {
+            document.getElementById('frenteVersoDiscount').value = currentSettings.frenteVersoDiscount;
+            document.getElementById('encad20').value = currentSettings.encadernacao.encad20;
+            document.getElementById('encad50').value = currentSettings.encadernacao.encad50;
+            document.getElementById('encad100').value = currentSettings.encadernacao.encad100;
+            document.getElementById('encad200').value = currentSettings.encadernacao.encad200;
+            document.getElementById('encad300').value = currentSettings.encadernacao.encad300;
+            document.getElementById('encad400').value = currentSettings.encadernacao.encad400;
+        }
+
+        function selecionarTipo(tipo) {
+            tipoSelecionado = tipo;
+            if (ultimoBotaoMaterial) {
+                ultimoBotaoMaterial.classList.remove('active');
+            }
+            const botaoClicado = event.target;
+            botaoClicado.classList.add('active');
+            ultimoBotaoMaterial = botaoClicado;
+            atualizarTotal();
+        }
+
+        function toggleFrenteVerso() {
+            frenteVersoAtivo = !frenteVersoAtivo;
+            document.getElementById('frenteVersoBtn').classList.toggle('active', frenteVersoAtivo);
+            const quantidadeInput = document.getElementById('quantidade');
+            let quantidade = Number(quantidadeInput.value);
+            if (frenteVersoAtivo && (quantidade < 2 || !quantidade)) {
+                alert('Ao selecionar Frente e Verso, a quantidade mínima é 2.');
+                quantidadeInput.value = 2;
+            }
+            atualizarTotal();
+        }
+
+        function toggleEncadernacao() {
+            encadernacaoAtivo = !encadernacaoAtivo;
+            document.getElementById('encadernacaoBtn').classList.toggle('active', encadernacaoAtivo);
+            atualizarTotal();
+        }
+
+        function calcularPreco(qtd, type) {
+            if (!currentPrices[type]) return 0;
+            for (const range of currentPrices[type]) {
+                if (qtd <= range.max) {
+                    return range.price;
+                }
+            }
+            return 0;
+        }
+
+        function calcularEncadernacao(folhas) {
+            if (folhas <= 20) return currentSettings.encadernacao.encad20;
+            if (folhas <= 50) return currentSettings.encadernacao.encad50;
+            if (folhas <= 100) return currentSettings.encadernacao.encad100;
+            if (folhas <= 200) return currentSettings.encadernacao.encad200;
+            if (folhas <= 300) return currentSettings.encadernacao.encad300;
+            if (folhas <= 400) return currentSettings.encadernacao.encad400;
+            return 0;
+        }
+
+        function atualizarObservacoes(tipo) {
+            const observacoesLista = document.getElementById('observacoesLista');
+            observacoesLista.innerHTML = '';
+            let observacoes = [];
+            if (tipo === 'couche') {
+                observacoes = [
+                    '* Papel Couchê Brilho 250g/m².',
+                    '* Formato de impressão: Super A4 (22x32cm).',
+                    '* Envie seu arquivo e retire sua impressão no balcão.',
+                    '* Para grandes volumes, solicitamos 50% de pagamento antecipado.'
+                ];
+            } else if (tipo === 'cartao') {
+                observacoes = [
+                    '* Papel Cartão Fosco 240g/m².',
+                    '* Formato de impressão: Super A4 (22x32cm).',
+                    '* Envia seu arquivo e retire sua impressão no balcão.',
+                    '* Para grandes volumes, solicitamos 50% de pagamento antecipado.'
+                ];
+            } else {
+                observacoes = [
+                    '* Papel Sulfite 75g/m².',
+                    '* Não realizamos cópias de livros físicos brochura de grande volume.',
+                    '* Formato de impressão: A4.',
+                    '* Envie seu arquivo e retire sua impressão no balcão.',
+                    '* Para grandes volumes, solicitamos 50% de pagamento antecipado.'
+                ];
+            }
+            observacoes.forEach(obs => {
+                const li = document.createElement('li');
+                li.textContent = obs;
+                observacoesLista.appendChild(li);
+            });
+        }
+
+        function atualizarTotal() {
+            const quantidadeInput = document.getElementById('quantidade');
+            let quantidade = Number(quantidadeInput.value);
+            if (quantidade < 1) {
+                alert('A quantidade mínima de impressões/cópias é 1.');
+                quantidadeInput.value = 1;
+                quantidade = 1;
+            }
+            if (frenteVersoAtivo && quantidade < 2) {
+                alert('Ao selecionar Frente e Verso, a quantidade mínima é 2.');
+                quantidadeInput.value = 2;
+                quantidade = 2;
+            }
+            let folhas = frenteVersoAtivo ? Math.ceil(quantidade / 2) : quantidade;
+            let valorUnitario = tipoSelecionado ? calcularPreco(quantidade, tipoSelecionado) : 0;
+            let totalImpressao = valorUnitario * quantidade;
+            if (frenteVersoAtivo) {
+                const discount = currentSettings.frenteVersoDiscount / 100;
+                totalImpressao *= (1 - discount);
+            }
+            let custoEncadernacao = 0;
+            if (encadernacaoAtivo) {
+                custoEncadernacao = calcularEncadernacao(folhas);
+            }
+            const total = totalImpressao + custoEncadernacao;
+            document.getElementById('resultadoQuantidade').innerText = quantidade;
+            document.getElementById('resultadoTipo').innerText = tipoSelecionado ? 
+                document.querySelector(`.button-group-material button.active`)?.innerText : 'Não selecionado';
+            document.getElementById('resultadoFrenteVerso').innerText = frenteVersoAtivo ? 'Sim' : 'Não';
+            document.getElementById('resultadoEncadernacao').innerText = encadernacaoAtivo ? 'Sim' : 'Não';
+            document.getElementById('resultadoValorUnitario').innerText = tipoSelecionado ? `R$ ${valorUnitario.toFixed(2)}` : 'R$ 0.00';
+            document.getElementById('resultadoTotal').innerHTML = tipoSelecionado ? 
+                `<span class="destaque-total"><span class="emoji">✅</span> R$ ${total.toFixed(2)} <span class="emoji">✅</span></span>` : 
+                `<span class="destaque-total"><span class="emoji">⚠️</span> Selecione um tipo <span class="emoji">⚠️</span></span>`;
+            document.getElementById('resultado').style.display = 'block';
+            document.getElementById('observacoes').style.display = 'block';
+            document.getElementById('btnCopiar').style.display = tipoSelecionado ? 'block' : 'none';
+            if (tipoSelecionado) {
+                atualizarObservacoes(tipoSelecionado);
+            } else {
+                document.getElementById('observacoesLista').innerHTML = '';
+            }
+        }
+
+        function copiarOrcamento() {
+            if (!tipoSelecionado) {
+                alert('Selecione um tipo de impressão antes de copiar o orçamento.');
+                return;
+            }
+            const quantidade = document.getElementById('resultadoQuantidade').innerText;
+            const tipo = document.getElementById('resultadoTipo').innerText;
+            const frenteVerso = document.getElementById('resultadoFrenteVerso').innerText;
+            const encadernacao = document.getElementById('resultadoEncadernacao').innerText;
+            const valorUnitario = document.getElementById('resultadoValorUnitario').innerText;
+            const total = document.getElementById('resultadoTotal').innerText;
+            const observacoes = document.getElementById('observacoes').innerText;
+            const textoCompleto = `Quantidade: ${quantidade}\nTipo: ${tipo}\nFrente e Verso: ${frenteVerso}\nEncadernação: ${encadernacao}\nValor por Impressão: ${valorUnitario}\n\nTotal: ${total}\n\n${observacoes}`;
+            navigator.clipboard.writeText(textoCompleto)
+                .then(() => {
+                    alert('Orçamento copiado para a área de transferência!');
+                })
+                .catch(() => {
+                    alert('Erro ao copiar o orçamento.');
+                });
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                atualizarTotal();
+            }
+        });
+    </script>
+</body>
+</html>
